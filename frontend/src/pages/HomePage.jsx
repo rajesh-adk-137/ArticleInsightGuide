@@ -1,10 +1,13 @@
 
-// import React, { useState } from 'react';
+
+// import React, { useState, useEffect } from 'react';
 // import Navbar from '../components/Navbar';
 // import Footer from '../components/Footer';
 // import { useNavigate } from 'react-router-dom';
 // import axios from 'axios';
 // import { FadeLoader } from 'react-spinners';
+// import Shepherd from 'shepherd.js';
+// import 'shepherd.js/dist/css/shepherd.css';
 
 // const HomePage = () => {
 //   const navigate = useNavigate();
@@ -47,7 +50,6 @@
 //         const dataWithUrl = { ...response.data, url }; // Include the URL in the data
 //         localStorage.setItem('articleData', JSON.stringify(dataWithUrl));
 //         navigate('/analyze', { state: { url } });
-//         // console.log('Stored articleData:', JSON.stringify(dataWithUrl));
 //       } else {
 //         setError('Error processing the article. Please try again.');
 //       }
@@ -59,6 +61,64 @@
 //     }
 //   };
 
+//   useEffect(() => {
+//     const tour = new Shepherd.Tour({
+//       useModalOverlay: true,
+//       defaultStepOptions: {
+//         classes: 'shepherd-theme-default',
+//         scrollTo: true
+//       }
+//     });
+
+//     tour.addStep({
+//       id: 'url-input',
+//       text: 'Enter the URL of the article you want to analyze here.',
+//       attachTo: { element: '.url-input', on: 'bottom' },
+//       buttons: [
+//         {
+//           text: 'Next',
+//           action: tour.next
+//         }
+//       ]
+//     });
+
+//     tour.addStep({
+//       id: 'submit-button',
+//       text: 'Click this button to submit the URL and start the analysis.',
+//       attachTo: { element: '.submit-button', on: 'bottom' },
+//       buttons: [
+//         {
+//           text: 'Back',
+//           action: tour.back
+//         },
+//         {
+//           text: 'Next',
+//           action: tour.next
+//         }
+//       ]
+//     });
+
+//     tour.addStep({
+//       id: 'loading-spinner',
+//       text: 'While your request is being processed, you will see this loading indicator.',
+//       attachTo: { element: '.loading-spinner', on: 'top' },
+//       buttons: [
+//         {
+//           text: 'Back',
+//           action: tour.back
+//         },
+//         {
+//           text: 'End Tour',
+//           action: tour.complete
+//         }
+//       ]
+//     });
+
+//     document.getElementById('start-tour').addEventListener('click', () => {
+//       tour.start();
+//     });
+//   }, []);
+
 //   return (
 //     <div className="min-h-screen flex flex-col bg-white">
 //       <div className="bg-black text-white">
@@ -66,7 +126,7 @@
 //       </div>
 //       <div className="flex-1 flex justify-center items-center bg-white min-h-[70vh] relative">
 //         {isLoading && (
-//           <div className="absolute inset-0 flex flex-col justify-center items-center bg-white bg-opacity-75 z-10">
+//           <div className="loading-spinner absolute inset-0 flex flex-col justify-center items-center bg-white bg-opacity-75 z-10">
 //             <FadeLoader color="#2563EB" />
 //             <p className="mt-4 text-lg text-gray-600">It can take a few minutes. Please wait...</p>
 //           </div>
@@ -81,13 +141,13 @@
 //             <input
 //               type="url"
 //               placeholder="https://dev.to/article-url"
-//               className="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+//               className="url-input p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
 //               value={url}
 //               onChange={(e) => setUrl(e.target.value)}
 //             />
 //             <button
 //               type="submit"
-//               className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+//               className="submit-button p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
 //               disabled={isLoading}
 //             >
 //               {isLoading ? 'Processing your request...' : 'Submit'}
@@ -97,6 +157,12 @@
 //         </div>
 //       </div>
 //       <Footer />
+//        <button
+//         id="start-tour"
+//         className="fixed bottom-4 right-4 rounded-full bg-gray-900 text-white p-4 shadow-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 z-10"
+//       >
+//         Start Tour
+//       </button>
 //     </div>
 //   );
 // };
@@ -107,7 +173,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { FadeLoader } from 'react-spinners';
 import Shepherd from 'shepherd.js';
@@ -115,6 +181,7 @@ import 'shepherd.js/dist/css/shepherd.css';
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [url, setUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -174,54 +241,66 @@ const HomePage = () => {
       }
     });
 
-    tour.addStep({
-      id: 'url-input',
-      text: 'Enter the URL of the article you want to analyze here.',
-      attachTo: { element: '.url-input', on: 'bottom' },
-      buttons: [
-        {
-          text: 'Next',
-          action: tour.next
-        }
-      ]
+    const steps = [
+      {
+        id: 'url-input',
+        text: 'Enter the URL of the article you want to analyze here.',
+        attachTo: { element: '.url-input', on: 'bottom' },
+        buttons: [
+          {
+            text: 'Next',
+            action: tour.next
+          }
+        ]
+      },
+      {
+        id: 'submit-button',
+        text: 'Click this button to submit the URL and start the analysis.',
+        attachTo: { element: '.submit-button', on: 'bottom' },
+        buttons: [
+          {
+            text: 'Back',
+            action: tour.back
+          },
+          {
+            text: 'Next',
+            action: tour.next
+          }
+        ]
+      },
+      {
+        id: 'loading-spinner',
+        text: 'While your request is being processed, you will see this loading indicator.',
+        attachTo: { element: '.loading-spinner', on: 'top' },
+        buttons: [
+          {
+            text: 'Back',
+            action: tour.back
+          },
+          {
+            text: 'End Tour',
+            action: tour.complete
+          }
+        ]
+      }
+    ];
+
+    steps.forEach(step => {
+      tour.addStep(step);
     });
 
-    tour.addStep({
-      id: 'submit-button',
-      text: 'Click this button to submit the URL and start the analysis.',
-      attachTo: { element: '.submit-button', on: 'bottom' },
-      buttons: [
-        {
-          text: 'Back',
-          action: tour.back
-        },
-        {
-          text: 'Next',
-          action: tour.next
-        }
-      ]
-    });
-
-    tour.addStep({
-      id: 'loading-spinner',
-      text: 'While your request is being processed, you will see this loading indicator.',
-      attachTo: { element: '.loading-spinner', on: 'top' },
-      buttons: [
-        {
-          text: 'Back',
-          action: tour.back
-        },
-        {
-          text: 'End Tour',
-          action: tour.complete
-        }
-      ]
-    });
-
-    document.getElementById('start-tour').addEventListener('click', () => {
+    const startTour = () => {
       tour.start();
-    });
-  }, []);
+    };
+
+    const startTourButton = document.getElementById('start-tour');
+    startTourButton.addEventListener('click', startTour);
+
+    return () => {
+      startTourButton.removeEventListener('click', startTour);
+      tour.complete();
+    };
+  }, [location.pathname]);
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
@@ -261,7 +340,12 @@ const HomePage = () => {
         </div>
       </div>
       <Footer />
-      {/* <button id="start-tour" className="bg-blue-500 text-white px-4 py-2 rounded-full fixed bottom-5 right-5">Start Tour</button> */}
+      <button
+        id="start-tour"
+        className="fixed bottom-4 right-4 rounded-full bg-gray-900 text-white p-4 shadow-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 z-10"
+      >
+        Start Tour
+      </button>
     </div>
   );
 };
