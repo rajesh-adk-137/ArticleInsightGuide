@@ -52,6 +52,7 @@ import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import heroImage from "../assets/images/learning-with-ai.png";
 import Shepherd from 'shepherd.js';
 import 'shepherd.js/dist/css/shepherd.css';
+import { motion } from 'framer-motion';
 
 const HeroSection = () => {
     const gradientStyle = {
@@ -119,34 +120,79 @@ const HeroSection = () => {
 
     return (
         <div className='grid grid-cols-1 md:grid-cols-6 m-10 h-[80%] md:px-20'>
-            <div className='flex justify-center items-center col-span-3'>
+            <motion.div
+                className='flex justify-center items-center col-span-3'
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+            >
                 <div>
-                    <h1 className='text-green-400 text-xl tracking-widest'>AI-POWERED TOOL</h1>
-                    <h1 className='hero-title text-5xl md:text-8xl font-bold my-3'>ARTICLE ANALYZER</h1>
-                    <p className='hero-description text-xl md:text-2xl text-[#aaabc4] my-10'>
+                    <motion.h1
+                        className='text-green-400 text-xl tracking-widest'
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 1.2, delay: 0.5 }}
+                    >
+                        AI-POWERED TOOL
+                    </motion.h1>
+                    <motion.h1
+                        className='hero-title text-5xl md:text-8xl font-bold my-3'
+                        initial={{opacity:0}} animate={{ opacity:1,fontSize: 50, x: 15, y: 20 }}
+                        transition={{ delay: 0.5, duration:0.5 }}
+                    >
+                        ARTICLE ANALYZER
+                    </motion.h1>
+                    <motion.p
+                        className='hero-description text-xl md:text-2xl text-[#aaabc4] my-10'
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 1.2, delay: 0.5 }}
+                    >
                         Transform your reading experience with ArticleInsignt – an innovative web app that summarizes online articles, performs sentiment analysis, extracts keywords, and lets you ask questions related to the content.
-                    </p>
-                    <div className='hero-buttons flex flex-row gap-10'>
+                    </motion.p>
+                    <motion.div
+                        className='hero-buttons flex flex-row gap-10'
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 1.2, delay: 0.8 }}
+                    >
                         <Link to='/home'>
-                            <button className='bg-[#171a8d] text-[#5ce1ff] font-bold px-5 py-3 rounded-lg flex items-center justify-center space-x-2 transition duration-300 ease-in-out hover:bg-[#0f0e69] hover:shadow-lg'>
+                        <motion.button className='bg-[#171a8d] text-[#5ce1ff] font-bold px-5 py-3 rounded-lg flex items-center justify-center space-x-2 transition duration-300 ease-in-out hover:bg-[#0f0e69] hover:shadow-lg'
+                                whileHover={{ scale: 1.2, textShadow: "0px 0px 8px", borderShadow: "0px 0px 8px" }}
+                                transition={{ duration: 0.1 }}>
                                 <span>TRY IT NOW</span>
                                 <MdKeyboardDoubleArrowRight className="text-xl" />
-                            </button>
+                            </motion.button>
                         </Link>
                         <a href="https://quine.sh/repo/rajesh-adk-137-ArticleInsight-802838180?utm_source=copy&utm_share_context=rdp/">
-                            <button className='bg-[#4fe331] text-black font-bold px-5 py-3 rounded-lg flex items-center justify-center space-x-2 transition duration-300 ease-in-out hover:bg-[#3fb427] hover:shadow-lg'>
+                        <motion.button className='bg-[#4fe331] text-black font-bold px-5 py-3 rounded-lg flex items-center justify-center space-x-2 transition duration-300 ease-in-out hover:bg-[#3fb427] hover:shadow-lg'
+                                whileHover={{ scale: 1.2, borderShadow: "0px 0px 2px" }}
+                                transition={{ duration: 0.1 }}>
                                 <span>VOTE ON QUINE</span>
                                 <MdKeyboardDoubleArrowRight className="text-xl" />
-                            </button>
+                            </motion.button>
                         </a>
-                    </div>
+                    </motion.div>
                 </div>
-            </div>
-            <div className='col-span-3 flex justify-center items-center' style={gradientStyle}>
+            </motion.div>
+            <motion.div
+                className='col-span-3 flex justify-center items-center'
+                style={gradientStyle}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+            >
                 <div className='p-2 md:w-full md:max-w-md'>
-                    <img src={heroImage} alt="Hero Image" className="w-full h-auto rounded-lg" />
+                    <motion.img
+                        src={heroImage}
+                        alt="Hero Image"
+                        className="w-full h-auto rounded-lg"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.7, delay: 0.5 }}
+                    />
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
 };

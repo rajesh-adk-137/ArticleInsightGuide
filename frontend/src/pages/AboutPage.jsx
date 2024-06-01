@@ -206,6 +206,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Shepherd from 'shepherd.js';
 import 'shepherd.js/dist/css/shepherd.css';
+import { motion } from 'framer-motion';
 
 function CheckIcon(props) {
   return (
@@ -276,20 +277,39 @@ export default function AboutPage() {
       <main className="flex-1">
         <section className="w-full pt-12 md:pt-24 lg:pt-32 border-y">
           <div className="px-6 md:px-8 space-y-12 xl:space-y-16">
-            <div className="grid max-w-[1300px] mx-auto gap-6 md:gap-12 md:grid-cols-2">
+            <motion.div 
+              className="grid max-w-[1300px] mx-auto gap-6 md:gap-12 md:grid-cols-2"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
               <div>
-                <h1 className="lg:leading-tighter text-4xl md:text-5xl xl:text-6xl article-summary">
+                <motion.h1 
+                  className="lg:leading-tighter text-4xl md:text-5xl xl:text-6xl article-summary"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.7, delay: 0.5 }}
+                >
                   Article Summary
-                </h1>
-                <p className="mx-auto max-w-[700px] text-lg">
-                  Quickly summarize articles, extract keywords, analyze sentiment, and get answers to your questions -
-                  all with our powerful AI-driven web app.
-                </p>
+                </motion.h1>
+                <motion.p 
+                  className="mx-auto max-w-[700px] text-lg"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.7, delay: 0.7 }}
+                >
+                  Quickly summarize articles, extract keywords, analyze sentiment, and get answers to your questions - all with our powerful AI-driven web app.
+                </motion.p>
               </div>
               <div className="flex flex-col items-start space-y-6">
-                <div className="inline-block rounded-lg bg-gray-100 px-4 py-2 text-lg">
+                <motion.div 
+                  className="inline-block rounded-lg bg-gray-100 px-4 py-2 text-lg"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.7, delay: 0.9 }}
+                >
                   Key Features
-                </div>
+                </motion.div>
                 <ul className="grid gap-3 py-6">
                   <li className="flex items-center gap-2">
                     <CheckIcon className="w-6 h-6" />
@@ -319,10 +339,15 @@ export default function AboutPage() {
                   </Link>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
-        <section className="flex justify-center items-center w-full py-12 md:py-24 lg:py-32 bg-white">
+        <motion.section 
+          className="flex justify-center items-center w-full py-12 md:py-24 lg:py-32 bg-white"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 1 }}
+        >
           <div className="container space-y-12 px-6 md:px-8">
             <div className="flex flex-col items-center justify-center space-y-6 text-center">
               <div className="inline-block rounded-lg bg-gray-100 px-4 py-2 text-lg">
@@ -332,54 +357,86 @@ export default function AboutPage() {
                 Streamline Your Research
               </h2>
               <p className="max-w-[900px] text-lg text-gray-500 md:text-xl lg:text-base xl:text-lg">
-                Our app helps you quickly summarize articles, identify key insights, and get answers to your questions
-                - saving you time and effort in your research.
+                Our app helps you quickly summarize articles, identify key insights, and get answers to your questions - saving you time and effort in your research.
               </p>
             </div>
             <div className="mx-auto grid items-start justify-center gap-8 sm:max-w-4xl sm:grid-cols-2 md:gap-12 lg:max-w-5xl lg:grid-cols-3">
-              <div className="grid gap-3">
+              <motion.div 
+                className="grid gap-3"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.7, delay: 1.2 }}
+              >
                 <h3 className="text-xl font-bold">Automated Summarization</h3>
                 <p className="text-lg text-gray-500">
-                  Our AI-powered summarization engine quickly distills long articles into concise, easy-to-digest
-                  summaries.
+                  Our AI-powered summarization engine quickly distills long articles into concise, easy-to-digest summaries.
                 </p>
-              </div>
-              <div className="grid gap-3">
+              </motion.div>
+              <motion.div 
+                className="grid gap-3"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.7, delay: 1.4 }}
+              >
                 <h3 className="text-xl font-bold">Keyword Extraction</h3>
                 <p className="text-lg text-gray-500">
                   Identify the most important concepts and topics in an article with our keyword extraction feature.
                 </p>
-              </div>
-              <div className="grid gap-3">
+              </motion.div>
+              <motion.div 
+                className="grid gap-3"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.7, delay: 1.6 }}
+              >
                 <h3 className="text-xl font-bold">Sentiment Analysis</h3>
                 <p className="text-lg text-gray-500">
                   Understand the overall sentiment expressed in user comments with our sentiment analysis capabilities.
                 </p>
-              </div>
-              <div className="grid gap-3">
+              </motion.div>
+              <motion.div 
+                className="grid gap-3"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.7, delay: 1.8 }}
+              >
                 <h3 className="text-xl font-bold">AI-Powered Q&A</h3>
                 <p className="text-lg text-gray-500">
                   Ask questions about the article content and get answers from our intelligent assistant.
                 </p>
-              </div>
-              <div className="grid gap-3">
+              </motion.div>
+              <motion.div 
+                className="grid gap-3"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.7, delay: 2 }}
+              >
                 <h3 className="text-xl font-bold">Easy to Use</h3>
                 <p className="text-lg text-gray-500">
-                  Our intuitive interface makes it simple to summarize articles, analyze comments, and get answers to
-                  your questions.
+                  Our intuitive interface makes it simple to summarize articles, analyze comments, and get answers to your questions.
                 </p>
-              </div>
-              <div className="grid gap-3">
+              </motion.div>
+              <motion.div 
+                className="grid gap-3"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.7, delay: 2.2 }}
+              >
                 <h3 className="text-xl font-bold">Powerful Insights</h3>
                 <p className="text-lg text-gray-500">
                   Uncover valuable insights and trends by leveraging the power of AI-driven article analysis.
                 </p>
-              </div>
+              </motion.div>
             </div>
           </div>
-        </section>
+        </motion.section>
 
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 flex justify-center align-center">
+        <motion.section 
+          className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 flex justify-center align-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7, delay: 2 }}
+        >
           <div className="container grid items-center justify-center gap-8 px-6 md:px-8 text-center">
             <div className="space-y-6">
               <div className="inline-block rounded-lg bg-gray-100 px-4 py-2 text-lg">
@@ -389,8 +446,7 @@ export default function AboutPage() {
                 Streamlined Article Analysis
               </h2>
               <p className="mx-auto max-w-[600px] text-lg text-gray-500 md:text-xl lg:text-base xl:text-lg">
-                Our app makes it easy to summarize articles, extract keywords, analyze sentiment, and get answers to
-                your questions.
+                Our app makes it easy to summarize articles, extract keywords, analyze sentiment, and get answers to your questions.
               </p>
             </div>
             <div className="mx-auto w-full max-w-sm space-y-6">
@@ -414,7 +470,7 @@ export default function AboutPage() {
               </div>
             </div>
           </div>
-        </section>
+        </motion.section>
         <Footer />
       </main>
       {/* <button
