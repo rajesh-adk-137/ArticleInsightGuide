@@ -6,6 +6,7 @@ import axios from 'axios';
 import { FadeLoader } from 'react-spinners';
 import Shepherd from 'shepherd.js';
 import 'shepherd.js/dist/css/shepherd.css';
+// import '../index.css'; 
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -71,9 +72,9 @@ const HomePage = () => {
     };
 
     const tour = new Shepherd.Tour({
-      useModalOverlay: false,
+      useModalOverlay: true,
       defaultStepOptions: {
-        classes: 'shepherd-theme-default',
+        classes: 'shepherd-theme-dark',
         scrollTo: smoothScrollTo,
         scrollToHandler: smoothScrollTo,
       }
@@ -82,7 +83,7 @@ const HomePage = () => {
     const steps = [
       {
         id: 'url-input',
-        text: 'Enter the URL of the article you want to analyze here.',
+        text: 'Enter the URL of the article you want to analyze here. It processes dev.to and medium articles.',
         attachTo: { element: '.url-input', on: 'bottom' },
         buttons: [
           {
@@ -93,7 +94,7 @@ const HomePage = () => {
       },
       {
         id: 'submit-button',
-        text: 'Click this button to submit the URL and start the analysis.',
+        text: 'Click this button to submit the URL and start the analysis, it may take a few minutes.',
         attachTo: { element: '.submit-button', on: 'bottom' },
         buttons: [
           {
@@ -101,26 +102,8 @@ const HomePage = () => {
             action: tour.back
           },
           {
-            text: 'Next',
+            text: 'end',
             action: tour.next
-          }
-        ]
-      },
-      {
-        id: 'loading-spinner',
-        text: 'While your request is being processed, you will see this loading indicator.',
-        attachTo: { element: '.loading-spinner', on: 'top' },
-        buttons: [
-          {
-            text: 'Back',
-            action: tour.back
-          },
-          {
-            text: 'End Tour',
-            action: () => {
-              scrollToTop();
-              tour.complete();
-            }
           }
         ]
       }
@@ -154,7 +137,7 @@ const HomePage = () => {
         {isLoading && (
           <div className="loading-spinner absolute inset-0 flex flex-col justify-center items-center bg-white bg-opacity-75 z-10">
             <FadeLoader color="#2563EB" />
-            <p className="mt-4 text-lg text-gray-600">It can take a few minutes. Please wait...</p>
+            <p className="mt-4 text-lg text-gray-600">Processing! Please wait...</p>
           </div>
         )}
         <div className={`bg-gray-100 p-8 rounded-2xl shadow-2xl md:min-w-[34rem] md:min-h-[15rem] ${isLoading ? 'opacity-50' : 'opacity-100'}`}>
@@ -173,7 +156,7 @@ const HomePage = () => {
             />
             <button
               type="submit"
-              className="submit-button p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="submit-button p-2 bg-blue-800 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
               disabled={isLoading}
             >
               {isLoading ? 'Processing your request...' : 'Submit'}
@@ -185,7 +168,7 @@ const HomePage = () => {
       <Footer />
       <button
         id="start-tour"
-        className="fixed bottom-4 right-4 rounded-full bg-blue-500 text-white p-4 shadow-lg hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-gray-900 z-10"
+        className="fixed bottom-4 right-4 rounded-full bg-blue-800 text-white p-4 shadow-lg hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-gray-900 z-10"
       >
         Start Tour
       </button>

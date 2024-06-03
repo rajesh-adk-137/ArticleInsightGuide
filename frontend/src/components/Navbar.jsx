@@ -37,7 +37,7 @@ const Navbar = () => {
         const tour = new Shepherd.Tour({
             useModalOverlay: true,
             defaultStepOptions: {
-                classes: 'shepherd-theme-default',
+                classes: 'shepherd-theme-dark',
                 scrollTo: false
             }
         });
@@ -45,7 +45,7 @@ const Navbar = () => {
         const steps = [
             {
                 id: 'brand',
-                text: 'Welcome to Article Insight! This is our brand logo.',
+                text: 'Welcome to Article Insight! Let\'s take you on a quick tour.',
                 attachTo: { element: '.text-3xl', on: 'bottom' },
                 buttons: [
                     {
@@ -75,7 +75,7 @@ const Navbar = () => {
             },
             {
                 id: 'github-link',
-                text: 'Here is the GitHub link.',
+                text: 'Here is the GitHub link to this project.',
                 attachTo: { element: '#github-link', on: 'bottom' },
                 buttons: [
                     {
@@ -83,7 +83,7 @@ const Navbar = () => {
                         action: tour.back
                     },
                     {
-                        text: 'Next',
+                        text: 'end',
                         action: () => {
                             tour.next();
                         }
@@ -157,9 +157,12 @@ const Navbar = () => {
                         }
                     </div>
                 </nav>
-                {(location.pathname === '/analyze' || location.pathname === '/' ) && <button id="start-tour" className="bg-blue-500 text-white px-4 py-2 rounded-full fixed bottom-5 right-5">Start Tour</button>}
-
-                {/* {location.pathname === '/' && <button id="start-tour" className="bg-blue-500 text-white px-4 py-2 rounded-full fixed bottom-5 right-5">Start Tour</button>} */}
+                {(location.pathname === '/analyze' || location.pathname === '/' ) && <button
+        id="start-tour"
+        className="fixed bottom-4 right-4 rounded-full bg-blue-800 text-white p-4 shadow-lg hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-gray-900 z-10"
+      >
+        Start Tour
+      </button>}
             </header>
         </>
     )
