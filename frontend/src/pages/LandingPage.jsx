@@ -34,12 +34,6 @@ const LandingPage = () => {
                 </motion.div>
                 <Footer />
             </div>
-             {/* <button
-        id="start-tour"
-        className="fixed bottom-4 right-4 rounded-full bg-gray-900 text-white p-4 shadow-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 z-10"
-      >
-        Start Tour
-      </button> */}
         </>
     );
 };
