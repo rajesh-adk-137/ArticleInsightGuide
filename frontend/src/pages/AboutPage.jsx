@@ -19,10 +19,12 @@ export default function AboutPage() {
     useEffect(() => {
         const tour = new Shepherd.Tour({
             useModalOverlay: true,
+            exitOnEsc: true,
+            keyboardNavigation: true,
+
             defaultStepOptions: {
                 classes: 'shepherd-theme-dark',
-                scrollTo: true,
-                scrollToHandler: smoothScrollTo
+                scrollTo: { behavior: 'smooth', block: 'center' }
             }
         });
 
@@ -33,8 +35,10 @@ export default function AboutPage() {
                 attachTo: { element: '#article-sum', on: 'bottom' },
                 buttons: [
                     {
-                        text: 'Next',
-                        action: tour.next
+                        text: 'next',
+                        action: () => {
+                            tour.next();
+                        }
                     }
                 ]
             },
@@ -44,12 +48,14 @@ export default function AboutPage() {
                 attachTo: { element: '.key-features', on: 'bottom' },
                 buttons: [
                     {
-                        text: 'Back',
+                        text: 'back',
                         action: tour.back
                     },
                     {
-                        text: 'Next',
-                        action: tour.next
+                        text: 'next',
+                        action: () => {
+                            tour.next();
+                        }
                     }
                 ]
             },
@@ -59,12 +65,14 @@ export default function AboutPage() {
                 attachTo: { element: '.benefits', on: 'top' },
                 buttons: [
                     {
-                        text: 'Back',
+                        text: 'back',
                         action: tour.back
                     },
                     {
-                        text: 'Next',
-                        action: tour.next
+                        text: 'next',
+                        action: () => {
+                            tour.next();
+                        }
                     }
                 ]
             },
@@ -74,7 +82,7 @@ export default function AboutPage() {
                 attachTo: { element: '.how-it-works', on: 'top' },
                 buttons: [
                     {
-                        text: 'Back',
+                        text: 'back',
                         action: tour.back
                     },
                     {
@@ -258,7 +266,7 @@ export default function AboutPage() {
         id="start-tour"
         className="fixed bottom-4 right-4 rounded-full bg-blue-800 text-white p-4 shadow-lg hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-gray-900 z-10"
       >
-        Start Tour
+        Guide me
       </button>
         </div>
     );

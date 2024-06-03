@@ -26,7 +26,7 @@ const FeaturesSection = () => {
     const [selected, setSelected] = useState(1);
     return (
         <div>
-            <h1 className='text-center text-4xl font-bold tracking-wider'>DISCOVER WITH <span className='text-[#4fe331]'>ArticleInsight</span></h1>
+            <h1 id="features" className='text-center text-4xl font-bold tracking-wider'>DISCOVER WITH <span className='text-[#4fe331]'>ArticleInsight</span></h1>
             <div className='grid '>
                 <div className="flex flex-col md:flex-row gap-8 mx-10 md:mx-24 mt-14 hover:cursor-pointer ">
                     <div className={selected == 1 ? " border-b-[6px] rounded-2xl border-blue-400 flex justify-center flex-col items-center mx-4 " : "flex justify-center flex-col items-center mx-4 border-b rounded-2xl hover:bg-gray-900 hover:shadow-md hover:shadow-blue-600"} onClick={() => { setSelected(1) }}>

@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import heroImage from "../assets/images/learning-with-ai.png";
-import Shepherd from 'shepherd.js';
-import 'shepherd.js/dist/css/shepherd.css';
+// import 'shepherd.js/dist/css/shepherd.css';
 import { motion } from 'framer-motion';
 
 const HeroSection = () => {
@@ -11,112 +10,6 @@ const HeroSection = () => {
         background: 'rgb(0,85,184)',
         background: 'radial-gradient(circle, rgb(0,85,184,1) 0%, rgba(0,0,0,1) 55%)'
     };
-
-    useEffect(() => {
-        const smoothScrollTo = (element) => {
-            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        };
-
-        const scrollToTop = () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
-
-        const tour = new Shepherd.Tour({
-            useModalOverlay: true,
-            defaultStepOptions: {
-                classes: 'shepherd-theme-dark',
-                scrollTo: smoothScrollTo,
-                scrollToHandler: smoothScrollTo
-            }
-        });
-
-        const steps = [
-            {
-                id: 'hero-title',
-                text: 'This is the main title of our application.',
-                attachTo: { element: '.hero-title', on: 'bottom' },
-                buttons: [
-                    {
-                        text: 'Next',
-                        action: () => {
-                            tour.next();
-                        }
-                    }
-                ]
-            },
-            {
-                id: 'hero-description',
-                text: 'Here is a brief description of what our application does.',
-                attachTo: { element: '.hero-description', on: 'bottom' },
-                buttons: [
-                    {
-                        text: 'Back',
-                        action: tour.back
-                    },
-                    {
-                        text: 'Next',
-                        action: () => {
-                            tour.next();
-                        }
-                    }
-                ]
-            },
-            {
-                id: 'hero-buttons',
-                text: 'You can try our application or vote for us using these buttons.',
-                attachTo: { element: '.hero-buttons', on: 'bottom' },
-                buttons: [
-                    {
-                        text: 'Back',
-                        action: tour.back
-                    },
-                    {
-                        text: 'next',
-                        action: () => {
-                            tour.next();
-                        }
-                    }
-                ]
-            },
-            {
-                id: 'this-project',
-                text: 'Learn more about the app by exploring below. Check out our FAQ sections and features to get the most out of our application.',
-                attachTo: { element: '#this-project', on: 'left' },
-                buttons: [
-                    {
-                        text: 'Back',
-                        action: tour.back
-                    },
-                    {
-                        text: 'end',
-                        action: () => {
-                            scrollToTop();
-                            tour.complete();
-                        }
-                    }
-                ],
-                advanceOn: { selector: '.shepherd-modal-overlay-container', event: 'click' }
-            }
-        ];
-
-        steps.forEach(step => {
-            tour.addStep(step);
-        });
-
-        const startTour = () => {
-            tour.start();
-        };
-
-        const startTourButton = document.getElementById('start-tour');
-        if (startTourButton) {
-            startTourButton.addEventListener('click', startTour);
-
-            return () => {
-                startTourButton.removeEventListener('click', startTour);
-                tour.complete();
-            };
-        }
-    }, []);
 
     return (
         <div className='grid grid-cols-1 md:grid-cols-6 m-10 h-[80%] md:px-20'>

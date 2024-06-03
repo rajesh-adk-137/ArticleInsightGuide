@@ -68,14 +68,16 @@ const Analyze = () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-    const tour = new Shepherd.Tour({
-      useModalOverlay: true,
-      defaultStepOptions: {
+  const tour = new Shepherd.Tour({
+    useModalOverlay: true,
+    exitOnEsc: true,
+    keyboardNavigation: true,
+
+    defaultStepOptions: {
         classes: 'shepherd-theme-dark',
-        scrollTo: smoothScrollTo,
-        scrollToHandler: smoothScrollTo
-      }
-    });
+        scrollTo: { behavior: 'smooth', block: 'center' }
+    }
+});
 
     const steps = [
       {
@@ -84,8 +86,10 @@ const Analyze = () => {
         attachTo: { element: '.article-topic', on: 'top' },
         buttons: [
           {
-            text: 'Next',
-            action: tour.next
+            text: 'next',
+            action: () => {
+              tour.next();
+          }
           }
         ]
       },
@@ -96,8 +100,15 @@ const Analyze = () => {
         attachTo: { element: '#tags', on: 'bottom' },
         buttons: [
           {
-            text: 'Next',
-            action: tour.next
+            text: 'back',
+          action: tour.back
+        },
+        {
+
+            text: 'next',
+            action: () => {
+              tour.next();
+          }
           }
         ]
       },
@@ -108,12 +119,14 @@ const Analyze = () => {
         attachTo: { element: '.article-summary', on: 'top' },
         buttons: [
           {
-            text: 'Back',
+            text: 'back',
             action: tour.back
           },
           {
-            text: 'Next',
-            action: tour.next
+            text: 'next',
+            action: () => {
+              tour.next();
+          }
           }
         ]
       },
@@ -123,12 +136,14 @@ const Analyze = () => {
         attachTo: { element: "#comment_sentiment", on: 'bottom' },
         buttons: [
           {
-            text: 'Back',
+            text: 'back',
             action: tour.back
           },
           {
-            text: 'Next',
-            action: tour.next
+            text: 'next',
+            action: () => {
+              tour.next();
+          }
           }
         ]
       },
@@ -138,12 +153,14 @@ const Analyze = () => {
         attachTo: { element: '.question-input', on: 'top' },
         buttons: [
           {
-            text: 'Back',
+            text: 'back',
             action: tour.back
           },
           {
-            text: 'Next',
-            action: tour.next
+            text: 'next',
+            action: () => {
+              tour.next();
+          }
           }
         ]
       },
@@ -153,11 +170,11 @@ const Analyze = () => {
         attachTo: { element: '.ai-responses', on: 'top' },
         buttons: [
           {
-            text: 'Back',
+            text: 'back',
             action: tour.back
           },
           {
-            text: 'End Tour',
+            text: 'end',
             action: () => {
               scrollToTop();
               tour.complete();

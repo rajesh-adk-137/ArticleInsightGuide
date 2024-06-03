@@ -73,22 +73,26 @@ const HomePage = () => {
 
     const tour = new Shepherd.Tour({
       useModalOverlay: true,
+      exitOnEsc: true,
+      keyboardNavigation: true,
+
       defaultStepOptions: {
-        classes: 'shepherd-theme-dark',
-        scrollTo: smoothScrollTo,
-        scrollToHandler: smoothScrollTo,
+          classes: 'shepherd-theme-dark',
+          scrollTo: { behavior: 'smooth', block: 'center' }
       }
-    });
+  });
 
     const steps = [
       {
         id: 'url-input',
-        text: 'Enter the URL of the article you want to analyze here. It processes dev.to and medium articles.',
+        text: 'Enter the URL of the article you want to analyze. It processes dev.to and medium articles.',
         attachTo: { element: '.url-input', on: 'bottom' },
         buttons: [
           {
-            text: 'Next',
-            action: tour.next
+            text: 'next',
+            action: () => {
+              tour.next();
+          }
           }
         ]
       },
@@ -98,12 +102,15 @@ const HomePage = () => {
         attachTo: { element: '.submit-button', on: 'bottom' },
         buttons: [
           {
-            text: 'Back',
+            text: 'back',
             action: tour.back
           },
           {
             text: 'end',
-            action: tour.next
+            action: () => {
+              scrollToTop();
+              tour.complete();
+          }
           }
         ]
       }
@@ -170,7 +177,7 @@ const HomePage = () => {
         id="start-tour"
         className="fixed bottom-4 right-4 rounded-full bg-blue-800 text-white p-4 shadow-lg hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-gray-900 z-10"
       >
-        Start Tour
+        Guide me
       </button>
     </div>
   );
