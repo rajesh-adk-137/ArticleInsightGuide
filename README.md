@@ -165,15 +165,14 @@ Open your browser and navigate to `http://localhost:5173`.
 ## Screenshots
 <!-- Add your screenshots here -->
 Landing Page:
-![Landing](YOUR_SCREENSHOT_LINK)
+![landing](https://github.com/rajesh-adk-137/ArticleInsightGuide/assets/89499267/2b0b0623-97e3-44e8-9439-e4f00f66217d)
 Home Page:
-![Home](YOUR_SCREENSHOT_LINK)
-ArticleInsight-1:
-![ArticleInsight-1](YOUR_SCREENSHOT_LINK)
-ArticleInsight-2:
-![ArticleInsight-2](YOUR_SCREENSHOT_LINK)
+![home](https://github.com/rajesh-adk-137/ArticleInsightGuide/assets/89499267/398ad7a6-7d3c-4bcf-83a9-76f34d0f8478)
+ArticleSummary:
+![article](https://github.com/rajesh-adk-137/ArticleInsightGuide/assets/89499267/f4f9395a-1b60-4485-a11a-217a369468c8)
+
 About Section:
-![About](YOUR_SCREENSHOT_LINK)
+![about](https://github.com/rajesh-adk-137/ArticleInsightGuide/assets/89499267/33971a22-1264-4c3f-848e-339e139c5f9d)
 
 ## Contributing
 
@@ -183,7 +182,7 @@ We welcome contributions from the community! If you'd like to contribute to Shep
 
 2. **Clone Your Fork**:
    ```bash
-   git clone https://github.com/yourusername/ShepherdInsight.git
+   git clone https://github.com/rajesh-adk-137/ArticleInsightGuide.git
    ```
 
 3. **Create a Branch**:
