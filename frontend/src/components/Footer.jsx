@@ -30,7 +30,7 @@ const Footer = ({ darkMode = true }) => {
           <div className="flex flex-col gap-3">
 
             <a href="https://quine.sh/"><div className="hover:text-white hover:cursor-pointer">Quine</div></a>
-            <a href="https://llmware.ai/"><div className="hover:text-white hover:cursor-pointer">LLMware</div></a>
+            <a href="https://shepherdjs.dev/"><div className="hover:text-white hover:cursor-pointer">Shepherd.js</div></a>
           </div>
         </div>
       </div>

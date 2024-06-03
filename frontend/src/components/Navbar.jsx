@@ -235,7 +235,7 @@ const Navbar = () => {
                     </div>
                     <div id="github-link" className=" flex items-center gap-6">
                         <div className='flex justify-center items-center'>
-                            <a href="https://github.com/rajesh-adk-137/StudyPal">
+                            <a href="https://github.com/rajesh-adk-137/ArticleInsightGuide/">
                                 <motion.button className='bg-gray-300 hover:bg-gray-400 text-black md:px-5 md:py-2 rounded-md md:flex items-center space-x-2 hidden'
                                     whileHover={{ scale: 1.1 }}>
                                     <FaGithub />
