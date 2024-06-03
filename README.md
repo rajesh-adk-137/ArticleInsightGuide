@@ -1,6 +1,4 @@
-Here's the updated README with "ShepherdInsight" replaced by "ArticleInsightGuide":
 
-<document_content>
 ---
 
 # ArticleInsightGuide: Guided Tour of Your Article Analysis Tool
@@ -53,13 +51,21 @@ Here's the updated README with "ShepherdInsight" replaced by "ArticleInsightGuid
 - [License](#license)
 - [Acknowledgments](#acknowledgments)
 
+
+
 ## Overview
 
-ArticleInsightGuide is an innovative web application designed to provide users with a comprehensive and interactive analysis of articles. Utilizing the Shepherd.js library, ArticleInsightGuide offers a guided tour feature that enhances user experience by providing step-by-step instructions and highlighting key functionalities of the application. This tool is ideal for researchers, journalists, content creators, and avid readers who seek to extract meaningful insights from written content effortlessly.
+ArticleInsightGuide is an innovative web application that enhances the user experience by providing a comprehensive and interactive analysis of articles, coupled with an intuitive guided tour powered by Shepherd.js. The guided tour feature aims to familiarize users with the application's functionalities, ensuring a seamless and efficient exploration of its capabilities.
 
-In today's fast-paced world, efficiently processing vast amounts of information is crucial. ArticleInsightGuide leverages advanced natural language processing (NLP) techniques to deliver accurate and insightful analyses of articles from popular platforms such as Dev.to and Medium, now with the added benefit of an interactive guided tour.
+ArticleInsightGuide leverages advanced natural language processing (NLP) techniques to deliver accurate and insightful analyses of articles from popular platforms such as Dev.to and Medium. However, the standout feature of ArticleInsightGuide is its interactive guided tour, which guides users through the application's various components and features, providing step-by-step instructions and highlighting key elements of the user interface.
 
 ## Key Features
+
+### Interactive Guided Tour
+
+The cornerstone of ArticleInsightGuide is its interactive guided tour, implemented using the Shepherd.js library. This feature provides users with a step-by-step walkthrough of the application's functionalities, ensuring they can navigate and utilize the tool effectively. The tour highlights key features, explains their purpose, and guides users through the application's workflow, making the user experience seamless and intuitive.
+
+Throughout the application, users will encounter a "Guide Me" button, which initiates the guided tour. This tour is designed to be context-aware, presenting relevant information and instructions based on the user's current location within the application.
 
 ### Content Categorization
 
@@ -81,9 +87,7 @@ Understanding the sentiment behind comments and feedback is essential for gaugin
 
 ArticleInsightGuide's question answering feature empowers users to obtain precise and contextual answers to their questions about an article's content. By leveraging deep learning models trained on vast knowledge bases, the application can provide accurate and relevant responses, enhancing the user's understanding of the subject matter.
 
-### Interactive Guided Tour
-
-The standout feature of ArticleInsightGuide is its interactive guided tour, powered by Shepherd.js. This feature provides users with a step-by-step walkthrough of the application's functionalities, ensuring they can navigate and utilize the tool effectively. The tour highlights key features and provides detailed explanations, making the user experience seamless and intuitive.
+With the interactive guided tour as the central focus, ArticleInsightGuide aims to provide users with a comprehensive and user-friendly experience, guiding them through the application's powerful features and empowering them to extract meaningful insights from written content effortlessly.
 
 ## Supported Platforms
 
@@ -94,8 +98,8 @@ Initially, ArticleInsightGuide supports articles from two popular platforms: Dev
 ArticleInsightGuide offers a user-friendly interface that allows users to easily input article URLs and access the various features provided by the application. With its powerful AI-driven capabilities and the added benefit of an interactive guided tour, ArticleInsightGuide aims to revolutionize the way users consume and engage with written content, empowering them to make informed decisions and gain deeper insights effortlessly.
 
 ## Demo
-<!-- Add your demo video link here -->
-<video src="YOUR_DEMO_VIDEO_LINK"></video>
+
+<video src="https://github.com/rajesh-adk-137/ArticleInsightGuide/assets/89499267/a68e39d7-f624-4570-bc8b-c5791fbef380"></video>
 
 ## Dependencies
 - React
