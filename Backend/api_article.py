@@ -187,7 +187,7 @@ async def get_all(url: str = Form(...)):
 @app.post("/get_answer/")
 async def get_answer_route(url: str = Form(...), question: str = Form(...)):
     title, content, comments, likes = scrape_article(url)
-
+    # print(url)
     if title:
         text = '"' + content + '"'
 
@@ -198,4 +198,3 @@ async def get_answer_route(url: str = Form(...), question: str = Form(...)):
         return JSONResponse({"answer": answer})
     else:
         raise HTTPException(status_code=400, detail="Error scraping the article.")
-
