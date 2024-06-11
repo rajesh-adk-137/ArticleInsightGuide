@@ -16,186 +16,117 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Helper function to fetch and parse the HTML content
+def fetch_html(url):
+    response = requests.get(url)
+    if response.status_code != 200:
+        raise HTTPException(status_code=response.status_code, detail="Error fetching the article.")
+    return BeautifulSoup(response.content, 'html.parser')
+
 # Generalized scraping function
 def scrape_article(url):
-    parsed_url = urlparse(url)
-    domain = parsed_url.netloc
+    domain = urlparse(url).netloc
 
     if 'dev.to' in domain:
         return scrape_dev_article(url)
     elif 'medium.com' in domain or 'levelup.gitconnected.com' in domain:
         return scrape_medium_article(url)
     else:
-        return None, 'Unsupported website', '', ''
+        raise HTTPException(status_code=400, detail='Unsupported website')
 
 def scrape_dev_article(url):
-    response = requests.get(url)
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.content, 'html.parser')
-        title_tag = soup.find('h1')
-        title = title_tag.get_text() if title_tag else 'No title found'
-
-        content_div = soup.find('div', class_='crayons-article__main')
-        paragraphs = content_div.find_all('p') if content_div else []
-        content = ''
-        for paragraph in paragraphs:
-            content += paragraph.get_text() + '\n\n'
-
-        comments_divs = soup.find_all('div', class_='comment__body')
-        comments = ''
-        for comment_div in comments_divs:
-            comments += comment_div.get_text() + '\n\n'
-
-        likes = 'Likes information not extracted'
-
-        lines = content.splitlines()
-        filtered_lines = []
-
-        remove_words_first_20 = ["Sign up", "Sign in", "Follow", "Listen", "Share"]
-        remove_words_last_25 = [
-            "--", "Building. Author of “Feeling Great About My Butt.” Previously: Creators @Medium, Product @embedly, Research @NECSI. http://whichlight.com.",
-            "Help", "Status", "About", "Careers", "Press", "Blog", "Privacy", "Terms", "Text to speech", "Teams"
-        ]
-
-        for i, line in enumerate(lines):
-            if i < 20 and any(word in line for word in remove_words_first_20):
-                continue
-            filtered_lines.append(line)
-
-        final_filtered_lines = []
-        for i, line in enumerate(filtered_lines):
-            if i >= len(filtered_lines) - 25 and any(word in line for word in remove_words_last_25):
-                continue
-            final_filtered_lines.append(line)
-
-        filtered_content = '\n'.join(final_filtered_lines)
-
-        return title, filtered_content, comments, likes
-    else:
-        return None, f'Error: Unable to fetch the article. Status code: {response.status_code}', '', ''
+    soup = fetch_html(url)
+    
+    title = soup.find('h1').get_text() if soup.find('h1') else 'No title found'
+    content = '\n\n'.join(p.get_text() for p in soup.find('div', class_='crayons-article__main').find_all('p', recursive=False))
+    comments = '\n\n'.join(div.get_text() for div in soup.find_all('div', class_='comment__body'))
+    likes = 'Likes information not extracted'
+    
+    content = filter_content(content)
+    
+    return title, content, comments, likes
 
 def scrape_medium_article(url):
-    response = requests.get(url)
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.content, 'html.parser')
-        title_tag = soup.find('h1')
-        title = title_tag.get_text() if title_tag else 'No title found'
-        
-        content = ''
-        article_body = soup.find_all('p')
-        for paragraph in article_body:
-            content += paragraph.get_text() + '\n\n'
-        
-        comments_section = soup.find_all('div', class_='comment')
-        likes_section = soup.find('button', class_='likeButton')
-        
-        comments = ''
-        if comments_section is None or not comments_section:
-            comments = ''
-        else:
-            for comment in comments_section:
-                comments += comment.get_text() + '\n\n'
-            
-        likes = likes_section.get_text() if likes_section else 'No likes information found'
-        
-        lines = content.splitlines()
-        filtered_lines = []
-        
-        remove_words_first_20 = ["Sign up", "Sign in", "Follow", "Listen", "Share"]
-        remove_words_last_25 = [
-            "--", "Building. Author of “Feeling Great About My Butt.” Previously: Creators @Medium, Product @embedly, Research @NECSI. http://whichlight.com.",
-            "Help", "Status", "About", "Careers", "Press", "Blog", "Privacy", "Terms", "Text to speech", "Teams"
-        ]
-        
-        for i, line in enumerate(lines):
-            if i < 20 and any(word in line for word in remove_words_first_20):
-                continue
-            filtered_lines.append(line)
-        
-        final_filtered_lines = []
-        for i, line in enumerate(filtered_lines):
-            if i >= len(filtered_lines) - 25 and any(word in line for word in remove_words_last_25):
-                continue
-            final_filtered_lines.append(line)
-        
-        filtered_content = '\n'.join(final_filtered_lines)
-        
-        return title, filtered_content, comments, likes
-    else:
-        return None, f'Error: Unable to fetch the article. Status code: {response.status_code}', '', ''
+    soup = fetch_html(url)
+    
+    title = soup.find('h1').get_text() if soup.find('h1') else 'No title found'
+    content = '\n\n'.join(p.get_text() for p in soup.find_all('p'))
+    comments = '\n\n'.join(div.get_text() for div in soup.find_all('div', class_='comment'))
+    likes = soup.find('button', class_='likeButton').get_text() if soup.find('button', class_='likeButton') else 'No likes information found'
+    
+    content = filter_content(content)
+    
+    return title, content, comments, likes
+
+def filter_content(content):
+    lines = content.splitlines()
+    filtered_lines = [line for i, line in enumerate(lines) if i >= 20 or not any(word in line for word in remove_words_first_20)]
+    filtered_lines = [line for i, line in enumerate(filtered_lines) if i < len(filtered_lines) - 25 or not any(word in line for word in remove_words_last_25)]
+    return '\n'.join(filtered_lines)
+
+remove_words_first_20 = ["Sign up", "Sign in", "Follow", "Listen", "Share"]
+remove_words_last_25 = [
+    "--", "Building. Author of “Feeling Great About My Butt.” Previously: Creators @Medium, Product @embedly, Research @NECSI. http://whichlight.com.",
+    "Help", "Status", "About", "Careers", "Press", "Blog", "Privacy", "Terms", "Text to speech", "Teams"
+]
 
 # LLMware Models
 def get_summary(text):
-    if text is not None:
-        slim_model = ModelCatalog().load_model("slim-summary-tool") 
-        #"llmware/slim-summary" <-use this model for better answers, but it is slow.
+    if text:
+        slim_model = ModelCatalog().load_model("slim-summary-tool")
         response = slim_model.function_call(text, params=["key points (3)"], function="summarize")
         return response["llm_response"]
-    else:
-        return "Invalid text"
+    return "Invalid text"
 
 def get_tags(text):
-    if text is not None:
+    if text:
         slim_model = ModelCatalog().load_model("slim-tags-tool")
         response = slim_model.function_call(text, params=["tags"], function="classify")
         return response["llm_response"]
-    else:
-        return "Invalid text"
+    return "Invalid text"
 
 def get_sentiment(comments):
-    if comments != '':
+    if comments:
         slim_model = ModelCatalog().load_model("slim-sentiment-tool")
         response = slim_model.function_call(comments, params=["sentiment"], function="classify")
         return response["llm_response"]
-    else:
-        return "Invalid text"
+    return "Invalid text"
 
 def get_topic(text):
-    if text is not None:
+    if text:
         slim_model = ModelCatalog().load_model("slim-topics-tool")
         response = slim_model.function_call(text, params=["topics"], function="classify")
         return response["llm_response"]
-    else:
-        return "Invalid text"
+    return "Invalid text"
 
 def get_answer(text, question):
-    if text is not None:
-        questions = '"' + question + " (explain)" + '"' 
+    if text:
+        questions = '"' + question + " (explain)" + '"'
         slim_model = ModelCatalog().load_model("slim-boolean-tool")
         response = slim_model.function_call(text, params=[questions], function="boolean")
         return response["llm_response"]
-    else:
-        return "Invalid text"
+    return "Invalid text"
 
 @app.post("/get_all/")
 async def get_all(url: str = Form(...)):
     title, content, comments, likes = scrape_article(url)
 
-    if title:
-        text = '"' + content + '"'
+    text = '"' + content + '"'
+    summary = get_summary(text)
+    tags = get_tags(text)
+    sentiment = get_sentiment(comments)
+    topic = get_topic(text)
 
-        summary = get_summary(text)
-        tags = get_tags(text)
-        sentiment = get_sentiment(comments)
-        topic = get_topic(text)
-
-        return JSONResponse({"summary": summary, "tags": tags, "sentiment": sentiment, "topic": topic})
-
-    else:
-        raise HTTPException(status_code=400, detail="Error scraping the article.")
+    return JSONResponse({"summary": summary, "tags": tags, "sentiment": sentiment, "topic": topic})
 
 @app.post("/get_answer/")
 async def get_answer_route(url: str = Form(...), question: str = Form(...)):
     title, content, comments, likes = scrape_article(url)
 
-    if title:
-        text = '"' + content + '"'
+    text = '"' + content + '"'
 
-        if not question:
-            raise HTTPException(status_code=400, detail="Question parameter is required for get_answer function")
+    if not question:
+        raise HTTPException(status_code=400, detail="Question parameter is required for get_answer function")
 
-        answer = get_answer(text, question)
-        return JSONResponse({"answer": answer})
-    else:
-        raise HTTPException(status_code=400, detail="Error scraping the article.")
-
+    answer = get_answer(text, question)
+    return JSONResponse({"answer": answer})
